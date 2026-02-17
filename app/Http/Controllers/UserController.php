@@ -20,6 +20,16 @@ class UserController extends Controller
         return view('pages.userManagement.index');
     }
 
+    public function show(ReadAdminUserRequest $request, UserRepo $userRepo)
+    {
+        $id = $request->query('id');
+        $user = $userRepo->getAdminUserById($id);
+        if (!$user) {
+            return redirect()->route('admin.users.index')->withErrors('User not found.');
+        }
+        return view('pages.userManagement.show', compact('user'));
+    }
+
     public function create()
     {
         return view('pages.userManagement.create');
@@ -66,7 +76,7 @@ class UserController extends Controller
     public function destroy(DestroyAdminUserRequest $request, UserRepo $userRepo)
     {
         try {
-            $id = $request->query('id');
+            $id = $request->input('id');
             if (!$userRepo->deleteAdminUser($id)) {
                 return response()->json([
                     'success' => false,
@@ -85,10 +95,10 @@ class UserController extends Controller
         }
     }
 
-    public function toggleStatus(DestroyAdminUserRequest $request, UserRepo $userRepo)
+    public function toggleStatus(EditAdminUserRequest $request, UserRepo $userRepo)
     {
         try {
-            $id = $request->query('id');
+            $id = $request->input('id');
             $user = $userRepo->toggleAdminUserStatus($id);
             if (!$user) {
                 return response()->json([
@@ -98,7 +108,7 @@ class UserController extends Controller
             }
             return response()->json([
                 'success' => true,
-                'message' => 'User status toggled successfully.',
+                'message' => 'Status Changed Successfully.',
                 'status' => $user->status
             ]);
         } catch (\Exception $e) {
@@ -116,6 +126,9 @@ class UserController extends Controller
             $data = $userRepo->getDataforDataTable($request);
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->addColumn('picture', function ($row) {
+                    return view('components.datatable-picture', ['picture' => $row->profile_picture])->render();
+                })
                 ->addColumn('name', function ($row) {
                     return $row->name;
                 })
@@ -123,7 +136,7 @@ class UserController extends Controller
                     return $row->email;
                 })
                 ->addColumn('phone', function ($row) {
-                    return $row->phone;
+                    return $row->phone_number;
                 })
                 ->addColumn('roles', function ($row) {
                         return $row->roles->pluck('name')->join(', ');
@@ -132,18 +145,18 @@ class UserController extends Controller
                     $data['id'] = $row->id;
                     $data['status'] = $row->status;
                     $data['statusClass'] = $row->status === 'active' ? 'badge-success' : 'badge-secondary';
-                    $data['toggle_status_url'] = $request->user()->can('userManagement.edit') ? route('admin.users.toggleStatus', ['id' => $row->id]) : null;
+                    $data['toggle_url'] = $request->user()->can('userManagement.edit') ? route('admin.users.toggleStatus', ['id' => $row->id]) : null;
                     return view('components.datatable-status', $data)->render();
                 })
                 ->addColumn('action', function ($row) use ($request) {
                     $data['id'] = $row->id;
-                    $data['edit_url'] = $request->user()->can('userManagement.update') ? route('admin.users.edit', ['id' => $row->id]) : null;
+                    $data['edit_url'] = $request->user()->can('userManagement.edit') ? route('admin.users.edit', ['id' => $row->id]) : null;
                     $data['delete_url'] = $request->user()->can('userManagement.delete') ? route('admin.users.destroy', ['id' => $row->id]) : null;
                     $data['view_url'] = $request->user()->can('userManagement.read') ? route('admin.users.show', ['id' => $row->id]) : null;
 
-                    return view('components.datatable_actions', $data)->render();
+                    return view('components.datatable-actions', $data)->render();
                 })
-                ->rawColumns(['action', 'status'])
+                ->rawColumns(['picture', 'action', 'status'])
                 ->make(true);
         } catch (\Exception $e) {
             Log::error('UserController@dataTable error', ['error' => $e->getMessage()]);

@@ -9,7 +9,7 @@ class EditAdminUserRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return Auth::guard('admin')->user()->can('userManagement.update');
+        return Auth::guard('admin')->user()->can('userManagement.edit');
     }
 
     public function rules()
@@ -36,8 +36,9 @@ class EditAdminUserRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        $this->merge([
-            'id' => $this->route('id'),
-        ]);
+        $id = $this->route('id') ?? $this->query('id') ?? $this->input('id');
+        if ($id) {
+            $this->merge(['id' => $id]);
+        }
     }
 }

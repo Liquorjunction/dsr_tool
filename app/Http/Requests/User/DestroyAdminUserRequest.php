@@ -36,8 +36,9 @@ class DestroyAdminUserRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        $this->merge([
-            'id' => $this->route('id'),
-        ]);
+        $id = $this->route('id') ?? $this->query('id') ?? $this->input('id');
+        if ($id) {
+            $this->merge(['id' => $id]);
+        }
     }
 }

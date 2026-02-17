@@ -44,7 +44,7 @@ class UserRepository implements UserRepositoryInterface
                 'name' => $request->name,
                 'email' => $request->email,
                 'username' => $request->email, // Temporary
-                'phone' => $request->phone,
+                'phone_number' => $request->phone_number,
                 'date_of_birth' => $request->date_of_birth,
                 'remarks' => $request->remarks,
                 'password' => Hash::make($request->password),
@@ -59,7 +59,7 @@ class UserRepository implements UserRepositoryInterface
             if ($request->hasFile('profile_image')) {
                 $image = $request->file('profile_image');
                 $path = $image->store('profile_images', 'public');
-                $user->profile_image = $path;
+                $user->profile_picture = $path;
                 $user->save();
             }
 
@@ -83,7 +83,7 @@ class UserRepository implements UserRepositoryInterface
 
             $user->name = $request->name;
             $user->email = $request->email;
-            $user->phone = $request->phone;
+            $user->phone_number = $request->phone_number;
             $user->date_of_birth = $request->date_of_birth;
             $user->remarks = $request->remarks;
 
@@ -94,7 +94,7 @@ class UserRepository implements UserRepositoryInterface
             if ($request->hasFile('profile_image')) {
                 $image = $request->file('profile_image');
                 $path = $image->store('profile_images', 'public');
-                $user->profile_image = $path;
+                $user->profile_picture = $path;
             }
 
             $user->save();
@@ -174,7 +174,7 @@ class UserRepository implements UserRepositoryInterface
 
             $user->name = $request->name;
             $user->email = $request->email;
-            $user->phone = $request->phone;
+            $user->phone_number = $request->phone_number;
             $user->date_of_birth = $request->date_of_birth;
             $user->remarks = $request->remarks;
 

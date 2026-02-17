@@ -17,7 +17,7 @@ class StoreAdminUserRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'phone' => 'nullable|string|max:20',
+            'phone_number' => 'nullable|string|max:20',
             'date_of_birth' => 'nullable|date',
             'remarks' => 'nullable|string',
             'password' => 'required|string|min:8|confirmed',
