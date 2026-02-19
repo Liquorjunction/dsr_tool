@@ -49,6 +49,21 @@
                 </ul>
             </div>
         </li>
+            <!-- Role Management -->
+            <li class="nav-item menu-items {{ request()->is('roles*') ? 'active' : '' }}">
+                <a class="nav-link" data-bs-toggle="collapse" href="#role-management"
+                    aria-expanded="{{ request()->is('roles*') ? 'true' : 'false' }}" aria-controls="role-management">
+                    <span class="menu-icon"><i class="mdi mdi-shield-account"></i></span>
+                    <span class="menu-title">Role Management</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse {{ request()->is('roles*') ? 'show' : '' }}" id="role-management">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" href="{{ route('admin.roles.index') }}">All Roles</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('admin.roles.create') }}">Add Role</a></li>
+                    </ul>
+                </div>
+            </li>
 
         <!-- UI Elements -->
         <li class="nav-item menu-items {{ request()->is('ui/*') ? 'active' : '' }}">

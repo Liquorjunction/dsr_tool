@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 
 Route::get('/', [DashboardController::class, 'redirectToDashboardOrLogin']);
@@ -29,6 +30,18 @@ Route::middleware('auth:admin')->group(function () {
         Route::delete('/destroy', [UserController::class, 'destroy'])->name('destroy');
         Route::post('/toggle-status', [UserController::class, 'toggleStatus'])->name('toggleStatus');
         Route::get('/datatable', [UserController::class, 'dataTable'])->name('dataTable');
+    });
+
+    // Role Management
+    Route::prefix('/roles')->name('admin.roles.')->group(function () {
+        Route::get('/', [RoleController::class, 'index'])->name('index');
+        Route::get('/create', [RoleController::class, 'create'])->name('create');
+        Route::post('/', [RoleController::class, 'store'])->name('store');
+        Route::get('/show', [RoleController::class, 'show'])->name('show');
+        Route::get('/edit', [RoleController::class, 'edit'])->name('edit');
+        Route::post('/update', [RoleController::class, 'update'])->name('update');
+        Route::delete('/destroy', [RoleController::class, 'destroy'])->name('destroy');
+        Route::get('/datatable', [RoleController::class, 'dataTable'])->name('dataTable');
     });
 
     Route::prefix('ui')->name('ui.')->group(function () {
