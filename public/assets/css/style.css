@@ -1,3 +1,42 @@
+/* Sidebar Select2 Customization */
+#sidebar .select2-container--default .select2-selection--single {
+    background: #23232b;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+}
+#sidebar .select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #fff;
+    line-height: 38px;
+    padding-left: 18px;
+}
+#sidebar .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 38px;
+    right: 10px;
+}
+#sidebar .select2-dropdown {
+    background: #23232b;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+#sidebar .select2-results__option {
+    background: #23232b;
+    color: #fff;
+    border-radius: 8px;
+}
+#sidebar .select2-results__option--highlighted {
+    background: #007bff;
+    color: #fff;
+}
+#sidebar .select2-container--default .select2-selection--single:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #007bff;
+}
 /* Pill style for the select box and Select2 */
 .dsr-pill-select,
 .select2-container--default .select2-selection--single {
@@ -27365,32 +27404,5 @@ dl li {
 
 .blank-page {
     height: 89vh;
-}
-
-/* Pill style for DSR select */
-.dsr-pill-select {
-    width: 100%;
-    background-color: #232733 !important;
-    color: #fff !important;
-    border: none !important;
-    border-radius: 999px !important;
-    padding: 0.75rem 1.5rem !important;
-    font-size: 1rem !important;
-    box-shadow: none !important;
-    appearance: none;
-    transition: border 0.2s;
-    margin-bottom: 1rem;
-}
-
-.dsr-pill-select:focus {
-    outline: none !important;
-    border: 2px solid #007bff !important;
-    background-color: #232733 !important;
-    color: #fff !important;
-}
-
-.dsr-pill-select option {
-    background: #232733;
-    color: #fff;
 }
 /*# sourceMappingURL=maps/style.css.map */

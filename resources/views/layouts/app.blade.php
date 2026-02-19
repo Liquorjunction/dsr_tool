@@ -15,7 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('assets/vendors/css/vendor.bundle.base.css') }}">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
+    <!-- Removed duplicate Select2 CSS include -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css">
@@ -59,18 +59,9 @@
     @stack('custom-scripts')
     <script src="{{ asset('assets/js/universal.js') }}"></script>
     <script src="{{ asset('assets/js/uc-form.js') }}"></script>
+    <script src="{{ asset('assets/js/sidebar-navbar-toggler.js') }}"></script>
 </body>
 
-        <!-- jQuery and Select2 JS for custom dropdown -->
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                $('#dsrType').select2({
-                    minimumResultsForSearch: Infinity,
-                    dropdownParent: $('#dsrType').parent(),
-                    width: '100%'
-                });
-            });
-        </script>
+        <!-- Select2 Sidebar Customization -->
+        <script src="{{ asset('assets/js/sidebar-select2.js') }}"></script>
 </html>
